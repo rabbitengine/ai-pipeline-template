@@ -1,0 +1,30 @@
+pipeline:
+  name: "campaign-standardization"
+  version: "1.0.0"
+
+source:
+  project: ""  # Set via GCP_PROJECT_ID env var
+  dataset: "ai_pipeline_demo"
+  table: "campaigns_raw"
+
+destination:
+  project: ""  # Set via GCP_PROJECT_ID env var
+  dataset: "ai_pipeline_demo"
+  table: "campaigns_standardized"
+
+model:
+  provider: "anthropic"
+  model_name: "claude-sonnet-4-20250514"
+  prompt: |
+    Parse this campaign name and extract structured fields.
+
+    Campaign name: {campaign_name}
+
+    Extract:
+    - source: The ad platform (facebook, google, tiktok, linkedin, etc.)
+    - objective: The campaign goal (prospecting, retargeting, brand, conversion, etc.)
+    - geo: The target geography as 2-letter code (US, UK, DE, etc.)
+    - audience: The audience type (cold, warm, lookalike, etc.) or null if not specified
+
+    Return JSON only, no explanation:
+    {{"source": "", "objective": "", "geo": "", "audience": ""}}
