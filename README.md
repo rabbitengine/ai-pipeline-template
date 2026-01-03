@@ -14,7 +14,8 @@ exec -l $SHELL
 **2. Install hatch:**
 
 ```bash
-pip install hatch
+sudo apt-get install pipx
+pipx install hatch
 ```
 
 **3. Set up credentials:**
